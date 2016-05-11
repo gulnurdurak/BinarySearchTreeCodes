@@ -18,43 +18,56 @@ public class TestBST {
 			  
 			  System.out.println("Enter numbers (0 is exit) >> ");
 			  number=s.nextInt();
+			  int counter = 0;
 			  while(number!=0){
 			  tree.insert(number);
+			  counter ++;
 			  number=s.nextInt();
 			  
 			  }
-			  System.out.println(tree.getCount()+" numbers are added");
+			  System.out.print(counter);
+			  if (counter>1)
+				  System.out.println(" numbers are added");
+			  else
+				  System.out.println(" number is added.");
 			  break;
 		  case 2:
-			  System.out.print("Enter a number to be seach: ");
+			  System.out.print("Enter a number to be search: ");
 			  number=s.nextInt();
 			  if(tree.search(number))
-				  System.out.println("exist");
+				  System.out.println("Exist.");
 			  else
-				  System.out.println("not exist");		  
+				  System.out.println("Not exist.");		  
 		  break;
 		  case 3:
 			  System.out.println("Enter a number to be deleted: ");
 			  number=s.nextInt();
-			  tree.delete(number);
-			  System.out.println(number+" is deleted");
+			  if (tree.isEmpty())
+				  System.out.println("Tree is empty.");
+			  else
+			  {
+				  tree.delete(number);
+				  System.out.println(number+" is deleted.");
+			  }
 			  break;
 		  case 4:
 			  System.out.print("Ordered list: ");
 			  tree.inorder();
 			  break;
 		  case 5:
-			//  tree.breadthFirstTravelsal();
+			  if (tree.isEmpty())
+				  System.out.println("Tree is empty.");
+			  else
+				  tree.breadthFirstTravelsal(tree.getRoot());
 			  break;
 		  case 6:
 			  System.out.print("# of nodes:"+tree.getCount());
-			  
 			  break;
 		  case 7:
-			  System.out.println("Height: "+tree.getHeight());
+			  System.out.println("Height: "+tree.getHeight(tree.getRoot()));
 			  break;
 		  case 8:
-			  System.out.println("# of leaf nodes: "+tree.getNumberofLeaves());
+			  System.out.println("# of leaf nodes: "+tree.getNumberofLeaves(tree.getRoot()));
 			  break;
 		  case 9:
 			  System.out.println("Goodbye my lover :-*");
