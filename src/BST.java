@@ -1,4 +1,7 @@
+import java.util.LinkedList;
+import java.util.Queue;
 
+import javax.xml.soap.Node;
 
 public class BST<E extends Comparable<E>> 
     extends AbstractTree<E> {
@@ -33,8 +36,10 @@ public class BST<E extends Comparable<E>>
     return false;
   }
 
-  @Override /** Insert element o into the binary tree
+  @Override 
+  /** Insert element o into the binary tree
    * Return true if the element is inserted successfully */
+  
   public boolean insert(E e) {
     if (root == null)
       root = createNewNode(e); // Create a new root
@@ -42,6 +47,7 @@ public class BST<E extends Comparable<E>>
       // Locate the parent node
       TreeNode<E> parent = null;
       TreeNode<E> current = root;
+      
       while (current != null)
         if (e.compareTo(current.element) < 0) {
           parent = current;
@@ -110,13 +116,18 @@ public class BST<E extends Comparable<E>>
 
   /** This inner class is static, because it does not access 
       any instance members defined in its outer class */
+  
   public static class TreeNode<E extends Comparable<E>> {
     protected E element;
     protected TreeNode<E> left;
     protected TreeNode<E> right;
-
+    
+    protected boolean visited = false;
+    
     public TreeNode(E e) {
       element = e;
+      this.visited = false;
+      
     }
   }
 
@@ -151,10 +162,14 @@ public class BST<E extends Comparable<E>>
     return list; // Return an array of nodes
   }
 
-  @Override /** Delete an element from the binary tree.
+  @Override 
+  
+  /** Delete an element from the binary tree.
    * Return true if the element is deleted successfully
    * Return false if the element is not in the tree */
+  
   public boolean delete(E e) {
+	  
     // Locate the node to be deleted and also locate its parent node
     TreeNode<E> parent = null;
     TreeNode<E> current = root;
@@ -258,31 +273,79 @@ public class BST<E extends Comparable<E>>
 
     @Override /** Remove the current element */
     public void remove() {
-      delete(list.get(current)); // Delete the current element
-      list.clear(); // Clear the list
-      inorder(); // Rebuild the list
+    	
+    	// Delete the current element
+    	delete(list.get(current));
+    	
+    	// Clear the list
+    	list.clear();
+    	
+    	// Rebuild the list
+    	inorder();
+    	}
     }
-  }
 
-  /** Remove all elements from the tree */
-  public void clear() {
-    root = null;
-    size = 0;
-  }
+  	/** Remove all elements from the tree */
+  	public void clear() {
+  		root = null;
+  		size = 0;
+  	}
   
-  public int getCount(){
-	  return this.getSize();
-  }
+  	public int getCount(){
+  		return this.getSize();
+  	}
  
-  public int getHeight(){
-	  return 0;
-  }
+  	//Method that returns height of tree.
+  	public int getHeight(TreeNode<E> root){
+	  
+  		if (root == null) {
+  			return 0;
+  		} else 
+	        	
+  		{
+  			//Compute the depth of each subtree.
+  			int leftDepth = getHeight(root.left);
+  			int rightDepth = getHeight(root.right);
+	 
+  			//Get the larger one.
+  			if (leftDepth > rightDepth) {
+  				return (leftDepth + 1);
+  			} else {
+  				return (rightDepth + 1);
+  			}
+  		}
+  	}
   
-  public void breadthFirstTravelsal(){
-  }
+  	//Method that print tree with Breadth First Traversal Algorithm.
+  	public void breadthFirstTravelsal(TreeNode root) {
+	  
+  		Queue<TreeNode> q = new LinkedList<TreeNode>();
+		
+  		if (root == null)
+			return;
+		
+		q.add(root);
+		
+		while (!q.isEmpty()) {
+			
+			TreeNode n = (TreeNode) q.remove();
+			System.out.print(" " + n.element);
+			if (n.left != null)
+				q.add(n.left);
+			if (n.right != null)
+				q.add(n.right);
+		}
+	}
   
-  public int getNumberofLeaves(){
-	  return 0;
-  }
-}
+  	//Method that returns number of leaves
+  	public int getNumberofLeaves(TreeNode node){
+  		if( node == null )
+  			return 0;
+  		if( node.left == null && node.right == null ) {
+  			return 1;
+  		} else {
+  			return getNumberofLeaves(node.left) + getNumberofLeaves(node.right);
+  			}
+  		}
+  	}
 
