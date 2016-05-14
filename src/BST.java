@@ -335,6 +335,7 @@ public class BST<E extends Comparable<E>>
 			if (n.right != null)
 				q.add(n.right);
 		}
+		System.out.println();
 	}
   
   	//Method that returns number of leaves
@@ -347,5 +348,48 @@ public class BST<E extends Comparable<E>>
   			return getNumberofLeaves(node.left) + getNumberofLeaves(node.right);
   			}
   		}
+  	
+
+//  	We use one queue and count parameter to print level by level
+  	
+  	public void levelByLevel(TreeNode root) {
+//  	if root is null than return
+        if (root == null) {
+            return;
+        }
+//      define q as linked list
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        
+        int levelCount = 1;			//	set levelcount to 1
+        int currentCount = 0;		//	set currentcount to 0
+        
+        q.offer(root);
+        
+        while (!q.isEmpty()) {
+        	
+            while (levelCount > 0) {
+            	
+                root = q.poll();
+                System.out.print(root.element + " ");
+                
+//              if left node of root is not null take it into queue
+                if (root.left != null) {
+                    currentCount++;
+                    q.offer(root.left);
+                }
+//              if right node of root is not null take it into queue
+                if (root.right != null) {
+                    currentCount++;
+                    q.offer(root.right);
+                }
+                levelCount--;
+            }
+//          go to the next line.
+            System.out.println();
+            levelCount = currentCount;
+            currentCount = 0;
+        }
+    }
+    
   	}
 
