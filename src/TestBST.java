@@ -58,7 +58,10 @@ public class TestBST {
 			  if (tree.isEmpty())
 				  System.out.println("Tree is empty.");
 			  else
+			  {
 				  tree.breadthFirstTravelsal(tree.getRoot());
+				  tree.levelByLevel(tree.getRoot());
+			  }
 			  break;
 		  case 6:
 			  System.out.print("# of nodes:"+tree.getCount());
